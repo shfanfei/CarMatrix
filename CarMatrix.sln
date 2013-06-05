@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrix", "CarMatrix\CarMatrix.csproj", "{717F6804-B06D-4351-999E-160B308C4FAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrix.Tests", "CarMatrix.Tests\CarMatrix.Tests.csproj", "{9FE431F2-5DA5-4EFD-8A47-C464786E83D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrixData", "CarMatrixData\CarMatrixData.csproj", "{DE10C897-7FD5-4656-9F0C-6F6EEC91CE9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrixDataInit", "CarMatrixDataReader\CarMatrixDataInit.csproj", "{8EF761F5-EEC1-4D41-9670-99A613794DD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrixCore", "CarMatrixCore\CarMatrixCore.csproj", "{1B15F41E-EED6-4AF2-A6EB-E3A611E6ECF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarMatrixServices", "CarMatrixServices\CarMatrixServices.csproj", "{4023B773-01EF-4E97-98D1-53DE830708EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{717F6804-B06D-4351-999E-160B308C4FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717F6804-B06D-4351-999E-160B308C4FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717F6804-B06D-4351-999E-160B308C4FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717F6804-B06D-4351-999E-160B308C4FAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE431F2-5DA5-4EFD-8A47-C464786E83D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE431F2-5DA5-4EFD-8A47-C464786E83D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE431F2-5DA5-4EFD-8A47-C464786E83D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE431F2-5DA5-4EFD-8A47-C464786E83D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE10C897-7FD5-4656-9F0C-6F6EEC91CE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE10C897-7FD5-4656-9F0C-6F6EEC91CE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE10C897-7FD5-4656-9F0C-6F6EEC91CE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE10C897-7FD5-4656-9F0C-6F6EEC91CE9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EF761F5-EEC1-4D41-9670-99A613794DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EF761F5-EEC1-4D41-9670-99A613794DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EF761F5-EEC1-4D41-9670-99A613794DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EF761F5-EEC1-4D41-9670-99A613794DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B15F41E-EED6-4AF2-A6EB-E3A611E6ECF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B15F41E-EED6-4AF2-A6EB-E3A611E6ECF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B15F41E-EED6-4AF2-A6EB-E3A611E6ECF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B15F41E-EED6-4AF2-A6EB-E3A611E6ECF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4023B773-01EF-4E97-98D1-53DE830708EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4023B773-01EF-4E97-98D1-53DE830708EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4023B773-01EF-4E97-98D1-53DE830708EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4023B773-01EF-4E97-98D1-53DE830708EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

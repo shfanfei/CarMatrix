@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Models.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="CompanySet" EntityType="Models.Store.CompanySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BrandsSet" EntityType="Models.Store.BrandsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarModelSet" EntityType="Models.Store.CarModelSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarSet" EntityType="Models.Store.CarSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderSet" EntityType="Models.Store.OrderSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonSet" EntityType="Models.Store.PersonSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CompanyCar" Association="Models.Store.CompanyCar">
+      <End Role="Company" EntitySet="CompanySet" />
+      <End Role="Car" EntitySet="CarSet" />
+    </AssociationSet>
+    <AssociationSet Name="CompanyBrands" Association="Models.Store.CompanyBrands">
+      <End Role="Company" EntitySet="CompanySet" />
+      <End Role="Brands" EntitySet="BrandsSet" />
+    </AssociationSet>
+    <AssociationSet Name="CompanyCarModel" Association="Models.Store.CompanyCarModel">
+      <End Role="Company" EntitySet="CompanySet" />
+      <End Role="CarModel" EntitySet="CarModelSet" />
+    </AssociationSet>
+    <AssociationSet Name="CarBrands" Association="Models.Store.CarBrands">
+      <End Role="Car" EntitySet="CarSet" />
+      <End Role="Brands" EntitySet="BrandsSet" />
+    </AssociationSet>
+    <AssociationSet Name="CarModelCar" Association="Models.Store.CarModelCar">
+      <End Role="CarModel" EntitySet="CarModelSet" />
+      <End Role="Car" EntitySet="CarSet" />
+    </AssociationSet>
+    <AssociationSet Name="CarOrder" Association="Models.Store.CarOrder">
+      <End Role="Car" EntitySet="CarSet" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonOrder" Association="Models.Store.PersonOrder">
+      <End Role="Person" EntitySet="PersonSet" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CompanySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BrandsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarModelSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Company_Id" Type="int" Nullable="false" />
+    <Property Name="Brands_Id" Type="int" Nullable="false" />
+    <Property Name="CarModel_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BuyTime" Type="datetime" Nullable="false" />
+    <Property Name="CarId" Type="int" Nullable="false" />
+    <Property Name="Car_Id" Type="int" Nullable="false" />
+    <Property Name="Person_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Birthday" Type="datetime" Nullable="true" />
+    <Property Name="Lat" Type="float" Nullable="true" />
+    <Property Name="Lnt" Type="float" Nullable="true" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="Zip" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <Association Name="CompanyCar">
+    <End Role="Company" Type="Models.Store.CompanySet" Multiplicity="1" />
+    <End Role="Car" Type="Models.Store.CarSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompanyBrands">
+    <End Role="Company" Type="Models.Store.CompanySet" Multiplicity="1" />
+    <End Role="Brands" Type="Models.Store.BrandsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Brands">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompanyCarModel">
+    <End Role="Company" Type="Models.Store.CompanySet" Multiplicity="1" />
+    <End Role="CarModel" Type="Models.Store.CarModelSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CarModel">
+        <PropertyRef Name="Company_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarBrands">
+    <End Role="Car" Type="Models.Store.CarSet" Multiplicity="*" />
+    <End Role="Brands" Type="Models.Store.BrandsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="Brands_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarModelCar">
+    <End Role="CarModel" Type="Models.Store.CarModelSet" Multiplicity="1" />
+    <End Role="Car" Type="Models.Store.CarSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarModel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="CarModel_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarOrder">
+    <End Role="Car" Type="Models.Store.CarSet" Multiplicity="1" />
+    <End Role="Order" Type="Models.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Car_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonOrder">
+    <End Role="Person" Type="Models.Store.PersonSet" Multiplicity="1" />
+    <End Role="Order" Type="Models.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Models" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelsContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompanySet" EntityType="Models.Company" />
+          <EntitySet Name="BrandsSet" EntityType="Models.Brands" />
+          <EntitySet Name="CarModelSet" EntityType="Models.CarModel" />
+          <EntitySet Name="CarSet" EntityType="Models.Car" />
+          <AssociationSet Name="CompanyCar" Association="Models.CompanyCar">
+            <End Role="Company" EntitySet="CompanySet" />
+            <End Role="Car" EntitySet="CarSet" />
+          </AssociationSet>
+          <AssociationSet Name="CompanyBrands" Association="Models.CompanyBrands">
+            <End Role="Company" EntitySet="CompanySet" />
+            <End Role="Brands" EntitySet="BrandsSet" />
+          </AssociationSet>
+          <AssociationSet Name="CompanyCarModel" Association="Models.CompanyCarModel">
+            <End Role="Company" EntitySet="CompanySet" />
+            <End Role="CarModel" EntitySet="CarModelSet" />
+          </AssociationSet>
+          <AssociationSet Name="CarBrands" Association="Models.CarBrands">
+            <End Role="Car" EntitySet="CarSet" />
+            <End Role="Brands" EntitySet="BrandsSet" />
+          </AssociationSet>
+          <AssociationSet Name="CarModelCar" Association="Models.CarModelCar">
+            <End Role="CarModel" EntitySet="CarModelSet" />
+            <End Role="Car" EntitySet="CarSet" />
+          </AssociationSet>
+          <EntitySet Name="OrderSet" EntityType="Models.Order" />
+          <AssociationSet Name="CarOrder" Association="Models.CarOrder">
+            <End Role="Car" EntitySet="CarSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="PersonSet" EntityType="Models.Person" />
+          <AssociationSet Name="PersonOrder" Association="Models.PersonOrder">
+            <End Role="Person" EntitySet="PersonSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Models.CompanyCar" FromRole="Company" ToRole="Car" />
+          <NavigationProperty Name="Brands" Relationship="Models.CompanyBrands" FromRole="Company" ToRole="Brands" />
+          <NavigationProperty Name="CarModel" Relationship="Models.CompanyCarModel" FromRole="Company" ToRole="CarModel" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Models.CompanyBrands" FromRole="Brands" ToRole="Company" />
+          <NavigationProperty Name="Car" Relationship="Models.CarBrands" FromRole="Brands" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="CarModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Code" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Models.CompanyCarModel" FromRole="CarModel" ToRole="Company" />
+          <NavigationProperty Name="Car" Relationship="Models.CarModelCar" FromRole="CarModel" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Models.CompanyCar" FromRole="Car" ToRole="Company" />
+          <NavigationProperty Name="Brands" Relationship="Models.CarBrands" FromRole="Car" ToRole="Brands" />
+          <NavigationProperty Name="CarModel" Relationship="Models.CarModelCar" FromRole="Car" ToRole="CarModel" />
+          <NavigationProperty Name="Order" Relationship="Models.CarOrder" FromRole="Car" ToRole="Order" />
+        </EntityType>
+        <Association Name="CompanyCar">
+          <End Type="Models.Company" Role="Company" Multiplicity="1" />
+          <End Type="Models.Car" Role="Car" Multiplicity="*" />
+        </Association>
+        <Association Name="CompanyBrands">
+          <End Type="Models.Company" Role="Company" Multiplicity="1" />
+          <End Type="Models.Brands" Role="Brands" Multiplicity="*" />
+        </Association>
+        <Association Name="CompanyCarModel">
+          <End Type="Models.Company" Role="Company" Multiplicity="1" />
+          <End Type="Models.CarModel" Role="CarModel" Multiplicity="*" />
+        </Association>
+        <Association Name="CarBrands">
+          <End Type="Models.Car" Role="Car" Multiplicity="*" />
+          <End Type="Models.Brands" Role="Brands" Multiplicity="1" />
+        </Association>
+        <Association Name="CarModelCar">
+          <End Type="Models.CarModel" Role="CarModel" Multiplicity="1" />
+          <End Type="Models.Car" Role="Car" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="BuyTime" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="Models.CarOrder" FromRole="Order" ToRole="Car" />
+          <Property Type="Int32" Name="CarId" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Models.PersonOrder" FromRole="Order" ToRole="Person" />
+        </EntityType>
+        <Association Name="CarOrder">
+          <End Type="Models.Car" Role="Car" Multiplicity="1" />
+          <End Type="Models.Order" Role="Order" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="DateTime" Name="Birthday" Nullable="true" />
+          <Property Type="Double" Name="Lat" Nullable="true" />
+          <Property Type="Double" Name="Lnt" Nullable="true" />
+          <Property Type="Boolean" Name="Gender" Nullable="false" />
+          <Property Type="String" Name="Zip" Nullable="true" />
+          <NavigationProperty Name="Order" Relationship="Models.PersonOrder" FromRole="Person" ToRole="Order" />
+        </EntityType>
+        <Association Name="PersonOrder">
+          <End Type="Models.Person" Role="Person" Multiplicity="1" />
+          <End Type="Models.Order" Role="Order" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="ModelsContainer">
+    <EntitySetMapping Name="CompanySet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Company)">
+        <MappingFragment StoreEntitySet="CompanySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrandsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Brands)">
+        <MappingFragment StoreEntitySet="BrandsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarModelSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.CarModel)">
+        <MappingFragment StoreEntitySet="CarModelSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Car)">
+        <MappingFragment StoreEntitySet="CarSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Order)">
+        <MappingFragment StoreEntitySet="OrderSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BuyTime" ColumnName="BuyTime" />
+          <ScalarProperty Name="CarId" ColumnName="CarId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Person)">
+        <MappingFragment StoreEntitySet="PersonSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lnt" ColumnName="Lnt" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CompanyCar" TypeName="Models.CompanyCar" StoreEntitySet="CarSet">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="Id" ColumnName="Company_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CompanyBrands" TypeName="Models.CompanyBrands" StoreEntitySet="BrandsSet">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="Id" ColumnName="Company_Id" />
+      </EndProperty>
+      <EndProperty Name="Brands">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CompanyCarModel" TypeName="Models.CompanyCarModel" StoreEntitySet="CarModelSet">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="Id" ColumnName="Company_Id" />
+      </EndProperty>
+      <EndProperty Name="CarModel">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarBrands" TypeName="Models.CarBrands" StoreEntitySet="CarSet">
+      <EndProperty Name="Brands">
+        <ScalarProperty Name="Id" ColumnName="Brands_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarModelCar" TypeName="Models.CarModelCar" StoreEntitySet="CarSet">
+      <EndProperty Name="CarModel">
+        <ScalarProperty Name="Id" ColumnName="CarModel_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarOrder" TypeName="Models.CarOrder" StoreEntitySet="OrderSet">
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Car_Id" />
+      </EndProperty>
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonOrder" TypeName="Models.PersonOrder" StoreEntitySet="OrderSet">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Person_Id" />
+      </EndProperty>
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
