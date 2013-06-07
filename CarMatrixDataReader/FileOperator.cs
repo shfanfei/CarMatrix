@@ -10,12 +10,19 @@ namespace CarMatrixDataReader
 {
     public class FileOperator
     {
-        public static DataSet LoadDataFromExcel(string filePath)
+        private string filePath;
+        private string strConn;
+
+        public FileOperator(string filePath)
+        {
+            this.filePath = filePath;
+            this.strConn = DBConnectionStr();
+        }
+
+        public DataSet LoadDataFromExcel()
         {
             try
             {
-                string strConn;
-                strConn = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=False;IMEX=1'";
                 OleDbConnection OleConn = new OleDbConnection(strConn);
                 OleConn.Open();
                 String sql = "SELECT * FROM  [Sheet1$]"; 
@@ -31,6 +38,45 @@ namespace CarMatrixDataReader
                 Console.WriteLine("read excel file exception ,{0}", ex.Message);
                 return null;
             }
+        }
+
+        public List<string> LoadSheetsNames()
+        {
+            try
+            {
+                List<string> nameList = new List<string>();
+
+                string strConn = DBConnectionStr();
+                OleDbConnection conn = new OleDbConnection(strConn);
+                conn.Open();
+                DataTable dt = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    if ((string)dr["TABLE_NAME"] != "_xlnm#_FilterDatabase")
+                    {
+                        nameList.Add((string)dr["TABLE_NAME"]);
+                    }
+                }
+                conn.Close();
+                return nameList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private string DBConnectionStr()
+        {
+            //EXCEL 连接字符串
+            string strConn = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source="
+                + this.filePath + ";Extended Properties=\"Excel 12.0 Xml;HDR=Yes;IMEX=1;\"";
+
+            //string strConn;
+            //strConn = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + filePath + ";Extended Properties='Excel 8.0;HDR=False;IMEX=1'";
+
+            return strConn;
         }
     }
 }
