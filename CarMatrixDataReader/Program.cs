@@ -23,9 +23,6 @@ namespace CarMatrixDataReader
             //    container.SaveChanges();
             //}
 
-
-            
-
             //string path = @"D:\temp.xlsx";
             //FileOperator op = new FileOperator(path);
             //DataSet ds = op.LoadDataFromExcel();
@@ -57,13 +54,27 @@ namespace CarMatrixDataReader
 
         static async void GetHttpContent()
         {
-            string mapKey = ConfigurationManager.AppSettings["map_key"];
-            string url = "http://api.map.baidu.com/geocoder/v2/" + "?address=百度大厦&output=xml&ak=" + mapKey;
-
             AddressTrans at = new AddressTrans();
-            string content = await at.Taskmethod(url);
-            at.ResolvePersonLocation(content);
-            Console.WriteLine("{0}", content);
+            List<Person> persons = new List<Person>();
+            for (int i = 0; i < 10; i++)
+            {
+                Person p = new Person();
+                p.Name = "name" + i.ToString();
+                p.Address = "百度大厦";
+                persons.Add(p);
+            }
+
+            foreach (var person in persons)
+            {
+                string url = at.BuildeUrl(person.Address.Trim());
+                string content = await Task.Run(() =>
+                {
+                    Task.Delay(1000).Wait();
+                    return at.Taskmethod(url);
+                });
+                at.ResolvePersonLocation(content, person);
+                Console.WriteLine("person name is {0},lat is {1},lnt is {2}", person.Name, person.Lat, person.Lnt);
+            }
         }
     }
 }

@@ -293,6 +293,10 @@
       <Project>{de10c897-7fd5-4656-9f0c-6f6eec91ce9d}</Project>
       <Name>CarMatrixData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CarMatrixServices\CarMatrixServices.csproj">
+      <Project>{4023b773-01ef-4e97-98d1-53de830708ec}</Project>
+      <Name>CarMatrixServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

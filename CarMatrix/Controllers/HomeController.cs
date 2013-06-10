@@ -3,30 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CarMatrixServices.Persons;
 
 namespace CarMatrix.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly PersonService personService;
+
+        public HomeController()
+        {
+            this.personService = new PersonService();
+        }
+
         public ActionResult Index()
-        {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
+        {     
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult GetPersons()
         {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return Json(this.personService.GetPersons(), JsonRequestBehavior.AllowGet);
         }
     }
 }
