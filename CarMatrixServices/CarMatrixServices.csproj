@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileOperations\FileService.cs" />
+    <Compile Include="Orders\OrderService.cs" />
     <Compile Include="Persons\PersonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
