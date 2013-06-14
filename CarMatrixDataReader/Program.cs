@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using CarMatrixData;
 using CarMatrixData.Models;
@@ -14,42 +16,44 @@ namespace CarMatrixDataReader
     {
         static void Main(string[] args)
         {
-            //using (var container = new ModelsContainer())
+            //int[] nums = Enumerable.Range(0, 100).ToArray();
+            //int len = nums.Count();
+            //Parallel.For(0, len, i =>
             //{
-            //    Person p = new Person();
-            //    p.Name = "jack";
+            //    Console.WriteLine(i);
+            //});
+            string path = @"D:\temp.xlsx";
+            FileOperator fo = new FileOperator(path);
+            fo.LoadExcelData();
 
-            //    container.Set<Person>().Add(p);
-            //    container.SaveChanges();
-            //}
-
-            //string path = @"D:\temp.xlsx";
-            //FileOperator op = new FileOperator(path);
-            //DataSet ds = op.LoadDataFromExcel();
-            //if (ds != null && ds.Tables != null)
-            //{
-            //    foreach (DataTable dt in ds.Tables)
-            //    {
-            //        if (!dt.TableName.Equals("_xlnm#_FilterDatabase"))
-            //        {
-            //            int count = dt.Columns.Count;                         
-
-            //            foreach (DataRow row in dt.Rows)
-            //            {
-            //                for (int i = 0; i < count; i++)
-            //                {
-            //                    object obj = row[i];
-            //                    Console.WriteLine("Column index is {0}.object is {1}", i, obj.ToString());
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-
-
-            GetHttpContent();
+            //GetHttpContent();
             Console.WriteLine("{0}", "end");
             Console.ReadKey();
+        }
+
+        static void ReadExcelData()
+        {
+            string path = @"D:\temp.xlsx";
+            FileOperator op = new FileOperator(path);
+            DataSet ds = op.LoadDataFromExcel();
+            if (ds != null && ds.Tables != null)
+            {
+                foreach (DataTable dt in ds.Tables)
+                {
+                    if (!dt.TableName.Equals("_xlnm#_FilterDatabase"))
+                    {
+                        int count = dt.Columns.Count;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                object obj = row[i];
+                                Console.WriteLine("Column index is {0}. Object is {1}", i, obj.ToString());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         static async void GetHttpContent()
