@@ -3,27 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CarMatrixServices.Persons;
+using CarMatrixData.Models;
 
 namespace CarMatrix.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly PersonService personService;
+        
 
         public HomeController()
         {
-            this.personService = new PersonService();
+            
         }
 
         public ActionResult Index()
-        {     
-            return View();
+        {
+            using (var container = new ModelsContainer())
+            {
+                var record = container.RecordSet.FirstOrDefault();
+                if (record == null)
+                    return Content("null");
+                else
+                    return Content("not null");
+            }
         }
 
         public ActionResult GetPersons()
         {
-            return Json(this.personService.GetPersons(), JsonRequestBehavior.AllowGet);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

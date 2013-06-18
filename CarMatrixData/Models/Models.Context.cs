@@ -12,12 +12,13 @@ namespace CarMatrixData.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class ModelsContainer : DbContext
     {
         public ModelsContainer()
-            : base("name = ModelsContainer")
+            : base("name=CMDatabaseConnectionString")
         {
+            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -37,5 +38,6 @@ namespace CarMatrixData.Models
         public DbSet<Car> CarSet { get; set; }
         public DbSet<Order> OrderSet { get; set; }
         public DbSet<Person> PersonSet { get; set; }
+        public DbSet<Record> RecordSet { get; set; }
     }
 }

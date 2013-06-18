@@ -12,6 +12,7 @@
     <EntitySet Name="CarSet" EntityType="Models.Store.CarSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderSet" EntityType="Models.Store.OrderSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PersonSet" EntityType="Models.Store.PersonSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RecordSet" EntityType="Models.Store.RecordSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CompanyCar" Association="Models.Store.CompanyCar">
       <End Role="Company" EntitySet="CompanySet" />
       <End Role="Car" EntitySet="CarSet" />
@@ -96,6 +97,22 @@
     <Property Name="Lnt" Type="float" Nullable="true" />
     <Property Name="Gender" Type="bit" Nullable="false" />
     <Property Name="Zip" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="RecordSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Brands" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Model" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="datetime" Nullable="true" />
+    <Property Name="Both" Type="datetime" Nullable="true" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Zip" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Lat" Type="float" Nullable="true" />
+    <Property Name="Lnt" Type="float" Nullable="true" />
   </EntityType>
   <Association Name="CompanyCar">
     <End Role="Company" Type="Models.Store.CompanySet" Multiplicity="1" />
@@ -220,6 +237,7 @@
             <End Role="Person" EntitySet="PersonSet" />
             <End Role="Order" EntitySet="OrderSet" />
           </AssociationSet>
+          <EntitySet Name="RecordSet" EntityType="Models.Record" />
         </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -312,6 +330,22 @@
           <End Type="Models.Person" Role="Person" Multiplicity="1" />
           <End Type="Models.Order" Role="Order" Multiplicity="*" />
         </Association>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Brands" Nullable="true" />
+          <Property Type="String" Name="Model" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="DateTime" Name="Time" Nullable="true" />
+          <Property Type="DateTime" Name="Both" Nullable="true" />
+          <Property Type="Boolean" Name="Gender" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Zip" Nullable="true" />
+          <Property Type="Double" Name="Lat" Nullable="true" />
+          <Property Type="Double" Name="Lnt" Nullable="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -370,6 +404,23 @@
           <ScalarProperty Name="Lnt" ColumnName="Lnt" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Zip" ColumnName="Zip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RecordSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Record)">
+        <MappingFragment StoreEntitySet="RecordSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Brands" ColumnName="Brands" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Both" ColumnName="Both" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="Lnt" ColumnName="Lnt" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

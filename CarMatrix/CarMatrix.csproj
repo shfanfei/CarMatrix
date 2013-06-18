@@ -289,13 +289,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CarMatrixCore\CarMatrixCore.csproj">
+      <Project>{1b15f41e-eed6-4af2-a6eb-e3a611e6ecf8}</Project>
+      <Name>CarMatrixCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CarMatrixData\CarMatrixData.csproj">
       <Project>{de10c897-7fd5-4656-9f0c-6f6eec91ce9d}</Project>
       <Name>CarMatrixData</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CarMatrixServices\CarMatrixServices.csproj">
-      <Project>{4023b773-01ef-4e97-98d1-53de830708ec}</Project>
-      <Name>CarMatrixServices</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

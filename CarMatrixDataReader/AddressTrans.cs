@@ -27,14 +27,14 @@ namespace CarMatrixDataReader
             return string.Format("http://api.map.baidu.com/geocoder/v2/?address={0}&output=xml&ak={1}", address, mapKey); ;
         }
 
-        public async Task<string> Taskmethod(string url)
+        public async Task TransLocation(Record record, string url)
         {
             var httpClient = new HttpClient();
-            string content = (await httpClient.GetStringAsync(url));
-            return content;
+            string content = await httpClient.GetStringAsync(url);
+            ResolvePersonLocation(content, record);
         }
 
-        public void ResolvePersonLocation(string content, Person person)
+        public void ResolvePersonLocation(string content, Record record)
         {
             XDocument xDoc = XDocument.Parse(content);
             var status = (from s in xDoc.Elements("GeocoderSearchResponse").Elements("status")
@@ -55,8 +55,8 @@ namespace CarMatrixDataReader
                                    .Elements("location")
                                    .Elements("lng")
                                select a.Value).FirstOrDefault();
-                    person.Lat = Convert.ToDouble(lat);
-                    person.Lnt = Convert.ToDouble(lnt);
+                    record.Lat = Convert.ToDouble(lat);
+                    record.Lnt = Convert.ToDouble(lnt);
                 }
                 else
                 {

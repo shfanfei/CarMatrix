@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 06/04/2013 20:59:47
--- Generated from EDMX file: C:\Users\nEmo\Documents\Visual Studio 2012\Projects\CarMatrix\CarMatrixData\Models\Models.edmx
+-- Date Created: 06/17/2013 18:07:10
+-- Generated from EDMX file: D:\Git\CarMatrix\CarMatrixData\Models\Models.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -17,11 +17,53 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_CompanyCar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CarSet] DROP CONSTRAINT [FK_CompanyCar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CompanyBrands]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[BrandsSet] DROP CONSTRAINT [FK_CompanyBrands];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CompanyCarModel]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CarModelSet] DROP CONSTRAINT [FK_CompanyCarModel];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarBrands]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CarSet] DROP CONSTRAINT [FK_CarBrands];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarModelCar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CarSet] DROP CONSTRAINT [FK_CarModelCar];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderSet] DROP CONSTRAINT [FK_CarOrder];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderSet] DROP CONSTRAINT [FK_PersonOrder];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[CompanySet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CompanySet];
+GO
+IF OBJECT_ID(N'[dbo].[BrandsSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[BrandsSet];
+GO
+IF OBJECT_ID(N'[dbo].[CarModelSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CarModelSet];
+GO
+IF OBJECT_ID(N'[dbo].[CarSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CarSet];
+GO
+IF OBJECT_ID(N'[dbo].[OrderSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderSet];
+GO
+IF OBJECT_ID(N'[dbo].[PersonSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PersonSet];
+GO
+IF OBJECT_ID(N'[dbo].[RecordSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RecordSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -83,6 +125,22 @@ CREATE TABLE [dbo].[PersonSet] (
 );
 GO
 
+-- Creating table 'RecordSet'
+CREATE TABLE [dbo].[RecordSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Brands] nvarchar(max)  NULL,
+    [Model] nvarchar(max)  NULL,
+    [City] nvarchar(max)  NULL,
+    [Time] datetime  NULL,
+    [Both] datetime  NULL,
+    [Gender] bit  NOT NULL,
+    [Address] nvarchar(max)  NULL,
+    [Zip] nvarchar(max)  NULL,
+    [Lat] float  NULL,
+    [Lnt] float  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -120,6 +178,12 @@ GO
 -- Creating primary key on [Id] in table 'PersonSet'
 ALTER TABLE [dbo].[PersonSet]
 ADD CONSTRAINT [PK_PersonSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RecordSet'
+ALTER TABLE [dbo].[RecordSet]
+ADD CONSTRAINT [PK_RecordSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
