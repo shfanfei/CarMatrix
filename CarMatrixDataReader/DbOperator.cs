@@ -29,7 +29,7 @@ namespace CarMatrixDataReader
                         string d = string.Format("{0}-{1}-01", dv.Substring(0, 4), dv.Substring(4, 2)).Trim();
                         record.Time = Convert.ToDateTime(d);
                         d = string.Format("{0}-01-01", dr[4].ToString());
-                        record.Birth = DateTime.Parse(d);
+                        record.Both = DateTime.Parse(d);
                         bool g = dr[5].ToString().Equals("男") ? true : false;
                         record.Gender = Convert.ToBoolean(g);
                         record.Address = dr[6].ToString();

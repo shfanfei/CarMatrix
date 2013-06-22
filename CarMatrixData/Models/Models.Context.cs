@@ -16,28 +16,15 @@ namespace CarMatrixData.Models
     public partial class ModelsContainer : DbContext
     {
         public ModelsContainer()
-            : base("name=CMDatabaseConnectionString")
+            : base("name=ModelsContainer")
         {
-            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Company>().HasMany(c => c.Brands).WithRequired(b => b.Company);
-            modelBuilder.Entity<Company>().HasMany(c => c.Car).WithRequired(c => c.Company);
-            modelBuilder.Entity<Company>().HasMany(c => c.CarModel).WithRequired(c => c.Company);
-            modelBuilder.Entity<Brands>().HasMany(b => b.Car).WithRequired(c => c.Brands);
-            modelBuilder.Entity<CarModel>().HasMany(c => c.Car).WithRequired(c => c.CarModel);
-            modelBuilder.Entity<Order>().HasRequired(o => o.Car).WithMany().HasForeignKey(o => o.CarId);
-            modelBuilder.Entity<Person>().HasMany(p => p.Order).WithRequired(o => o.Person);
-        }
-
-        public DbSet<Company> CompanySet { get; set; }
-        public DbSet<Brands> BrandsSet { get; set; }
-        public DbSet<CarModel> CarModelSet { get; set; }
-        public DbSet<Car> CarSet { get; set; }
-        public DbSet<Order> OrderSet { get; set; }
-        public DbSet<Person> PersonSet { get; set; }
+    
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    throw new UnintentionalCodeFirstException();
+        //}
+    
         public DbSet<Record> RecordSet { get; set; }
     }
 }

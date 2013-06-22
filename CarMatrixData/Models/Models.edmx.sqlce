@@ -1,0 +1,60 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 06/22/2013 23:05:25
+-- Generated from EDMX file: C:\Users\nEmo\Documents\GitHub\CarMatrix\CarMatrixData\Models\Models.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [RecordSet];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'RecordSet'
+CREATE TABLE [RecordSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Brands] nvarchar(4000)  NULL,
+    [Model] nvarchar(4000)  NULL,
+    [City] nvarchar(4000)  NULL,
+    [Time] datetime  NULL,
+    [Both] datetime  NULL,
+    [Gender] bit  NOT NULL,
+    [Address] nvarchar(4000)  NULL,
+    [Zip] nvarchar(4000)  NULL,
+    [Lat] float  NULL,
+    [Lnt] float  NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [Id] in table 'RecordSet'
+ALTER TABLE [RecordSet]
+ADD CONSTRAINT [PK_RecordSet]
+    PRIMARY KEY ([Id] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

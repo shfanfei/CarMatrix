@@ -19,7 +19,7 @@ namespace CarMatrixData.Models
         public string Model { get; set; }
         public string City { get; set; }
         public Nullable<System.DateTime> Time { get; set; }
-        public Nullable<System.DateTime> Birth { get; set; }
+        public Nullable<System.DateTime> Both { get; set; }
         public bool Gender { get; set; }
         public string Address { get; set; }
         public string Zip { get; set; }
