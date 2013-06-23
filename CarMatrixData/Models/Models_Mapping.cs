@@ -12,19 +12,19 @@ namespace CarMatrixData.Models
     #pragma warning disable 1573
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Common;
+    using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration;
+    using System.Data.Entity.Infrastructure;
     
-    public partial class Record
+    internal partial class Models_Mapping : EntityTypeConfiguration<Models>
     {
-        public int Id { get; set; }
-        public string Brands { get; set; }
-        public string Model { get; set; }
-        public string City { get; set; }
-        public Nullable<System.DateTime> Time { get; set; }
-        public Nullable<System.DateTime> Both { get; set; }
-        public bool Gender { get; set; }
-        public string Address { get; set; }
-        public string Zip { get; set; }
-        public Nullable<double> Lat { get; set; }
-        public Nullable<double> Lnt { get; set; }
+        public Models_Mapping()
+        {                        
+              this.HasKey(t => t.Id);        
+              this.ToTable("ModelsSet");
+              this.Property(t => t.Id).HasColumnName("Id");
+         }
     }
 }

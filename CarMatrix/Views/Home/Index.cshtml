@@ -23,9 +23,11 @@
     </script>
 }
 
-@using (Html.BeginForm("GetConditions", "Home", FormMethod.Get))
-{
+<div id="conditions-div">
+    @Html.DropDownList("buyTime", ViewBag.BuyTime as IEnumerable<SelectListItem>)
+    @Html.DropDownList("brands", ViewBag.BuyTime as IEnumerable<SelectListItem>)
+    @Html.DropDownList("models", ViewBag.BuyTime as IEnumerable<SelectListItem>)
+</div>
 
-}
 <div id="map-div" style="width: 600px; height: 500px">
 </div>

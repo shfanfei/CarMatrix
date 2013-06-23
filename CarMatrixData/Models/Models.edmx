@@ -7,6 +7,9 @@
     <Schema Namespace="Models.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="ModelsStoreContainer">
     <EntitySet Name="RecordSet" EntityType="Models.Store.RecordSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BrandsSet" EntityType="Models.Store.BrandsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ModelsSet" EntityType="Models.Store.ModelsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BuyTimeSet" EntityType="Models.Store.BuyTimeSet" store:Type="Tables" Schema="dbo" />
   </EntityContainer>
   <EntityType Name="RecordSet">
     <Key>
@@ -24,12 +27,36 @@
     <Property Name="Lat" Type="float" Nullable="true" />
     <Property Name="Lnt" Type="float" Nullable="true" />
   </EntityType>
+  <EntityType Name="BrandsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ModelsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="true" />
+  </EntityType>
+  <EntityType Name="BuyTimeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+  </EntityType>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Models" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="ModelsContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="RecordSet" EntityType="Models.Record" />
+          <EntitySet Name="BrandsSet" EntityType="Models.Brands" />
+          <EntitySet Name="ModelsSet" EntityType="Models.Models" />
+          <EntitySet Name="BuyTimeSet" EntityType="Models.BuyTime" />
         </EntityContainer>
         <EntityType Name="Record">
           <Key>
@@ -46,6 +73,27 @@
           <Property Type="String" Name="Zip" />
           <Property Type="Double" Name="Lat" />
           <Property Type="Double" Name="Lnt" />
+        </EntityType>
+        <EntityType Name="Brands">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Models">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" />
+        </EntityType>
+        <EntityType Name="BuyTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Time" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -67,6 +115,30 @@
           <ScalarProperty Name="Zip" ColumnName="Zip" />
           <ScalarProperty Name="Lat" ColumnName="Lat" />
           <ScalarProperty Name="Lnt" ColumnName="Lnt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BrandsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Brands)">
+        <MappingFragment StoreEntitySet="BrandsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ModelsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.Models)">
+        <MappingFragment StoreEntitySet="ModelsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BuyTimeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.BuyTime)">
+        <MappingFragment StoreEntitySet="BuyTimeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

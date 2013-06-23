@@ -6,22 +6,60 @@ using System.Web.Mvc;
 using CarMatrix.Caching;
 using CarMatrix.Infrastructure;
 using CarMatrixData.Models;
+using ModelEntity = CarMatrixData.Models.Models;
 
 namespace CarMatrix.Controllers
 {
     public class HomeController : Controller
     {
-        private IRepository<Record> repository;
-        private ICacheManager cacheManager;
+        private IUnitOfWork unitOfWork;
+        public ICacheManager CacheManager { get; set; }
 
-        public HomeController(IRepository<Record> repository)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         public ActionResult Index()
         {
+            AddSelectItems();
             return View();
+        }
+
+        private void AddSelectItems()
+        {
+            IEnumerable<BuyTime> buyTimes = this.unitOfWork.GetBuyTimes();
+            List<SelectListItem> buyTimesItems = new List<SelectListItem>();
+            foreach (var buyTime in buyTimes)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = buyTime.Time.ToShortDateString();
+                item.Value = buyTime.Id.ToString();
+                buyTimesItems.Add(item);
+            }
+            ViewBag.BuyTime = buyTimesItems;
+
+            IEnumerable<Brands> brands = this.unitOfWork.GetBrands();
+            List<SelectListItem> brandsItems = new List<SelectListItem>();
+            foreach (var brand in brands)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = brand.Name;
+                item.Value = brand.Id.ToString();
+                brandsItems.Add(item);
+            }
+            ViewBag.Models = brandsItems;
+
+            IEnumerable<ModelEntity> models = this.unitOfWork.GetModels();
+            List<SelectListItem> modelItems = new List<SelectListItem>();
+            foreach (var model in models)
+            {
+                SelectListItem item = new SelectListItem();
+                item.Text = model.Name;
+                item.Value = model.Id.ToString();
+                modelItems.Add(item);
+            }
+            ViewBag.Brands = modelItems; 
         }
 
         public ActionResult TempMethod()

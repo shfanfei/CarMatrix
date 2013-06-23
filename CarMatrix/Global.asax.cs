@@ -9,6 +9,7 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using CarMatrix.Caching;
+using CarMatrix.Controllers;
 using CarMatrix.Infrastructure;
 using CarMatrixData.Models;
 
@@ -34,11 +35,13 @@ namespace CarMatrix
         private void DependencyInject()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+            builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
 
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();
             builder.RegisterType<ModelsContainer>().As<ModelsContainer>().InstancePerHttpRequest();
             builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().SingleInstance();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
+            builder.RegisterType<HomeController>().OnActivated(h => h.Instance.CacheManager = h.Context.Resolve<ICacheManager>());
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

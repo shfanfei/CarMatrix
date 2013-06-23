@@ -13,18 +13,9 @@ namespace CarMatrixData.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Record
+    public partial class BuyTime
     {
         public int Id { get; set; }
-        public string Brands { get; set; }
-        public string Model { get; set; }
-        public string City { get; set; }
-        public Nullable<System.DateTime> Time { get; set; }
-        public Nullable<System.DateTime> Both { get; set; }
-        public bool Gender { get; set; }
-        public string Address { get; set; }
-        public string Zip { get; set; }
-        public Nullable<double> Lat { get; set; }
-        public Nullable<double> Lnt { get; set; }
+        public System.DateTime Time { get; set; }
     }
 }

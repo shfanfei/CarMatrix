@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 06/22/2013 23:05:25
+-- Date Created: 06/23/2013 21:13:46
 -- Generated from EDMX file: C:\Users\nEmo\Documents\GitHub\CarMatrix\CarMatrixData\Models\Models.edmx
 -- --------------------------------------------------
 
@@ -19,6 +19,12 @@
 -- --------------------------------------------------
 
     DROP TABLE [RecordSet];
+GO
+    DROP TABLE [BrandsSet];
+GO
+    DROP TABLE [ModelsSet];
+GO
+    DROP TABLE [BuyTimeSet];
 GO
 
 -- --------------------------------------------------
@@ -41,6 +47,27 @@ CREATE TABLE [RecordSet] (
 );
 GO
 
+-- Creating table 'BrandsSet'
+CREATE TABLE [BrandsSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL
+);
+GO
+
+-- Creating table 'ModelsSet'
+CREATE TABLE [ModelsSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(4000)  NULL
+);
+GO
+
+-- Creating table 'BuyTimeSet'
+CREATE TABLE [BuyTimeSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Time] datetime  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -48,6 +75,24 @@ GO
 -- Creating primary key on [Id] in table 'RecordSet'
 ALTER TABLE [RecordSet]
 ADD CONSTRAINT [PK_RecordSet]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'BrandsSet'
+ALTER TABLE [BrandsSet]
+ADD CONSTRAINT [PK_BrandsSet]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'ModelsSet'
+ALTER TABLE [ModelsSet]
+ADD CONSTRAINT [PK_ModelsSet]
+    PRIMARY KEY ([Id] );
+GO
+
+-- Creating primary key on [Id] in table 'BuyTimeSet'
+ALTER TABLE [BuyTimeSet]
+ADD CONSTRAINT [PK_BuyTimeSet]
     PRIMARY KEY ([Id] );
 GO
 
