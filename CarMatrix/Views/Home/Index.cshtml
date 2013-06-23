@@ -8,8 +8,8 @@
         $(function () {
             var map = new BMap.Map("map-div");
             var i = 0;
-            
-            $.get("/Home/GetPersons", function (data) {
+
+            $.get("/Home/GetRecords", function (data) {
                 $.each(data, function (k, v) {
                     if (i == 0) {
                         map.centerAndZoom(new BMap.Point(v.Lnt, v.Lat), 14);
@@ -22,6 +22,10 @@
         });
     </script>
 }
-<div id="map-div" style="width: 600px; height: 500px">
 
+@using (Html.BeginForm("GetConditions", "Home", FormMethod.Get))
+{
+
+}
+<div id="map-div" style="width: 600px; height: 500px">
 </div>

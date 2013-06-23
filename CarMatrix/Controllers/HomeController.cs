@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CarMatrix.Caching;
+using CarMatrix.Infrastructure;
 using CarMatrixData.Models;
 
 namespace CarMatrix.Controllers
 {
     public class HomeController : Controller
     {
+        private IRepository<Record> repository;
+        private ICacheManager cacheManager;
 
-
-        public HomeController()
+        public HomeController(IRepository<Record> repository)
         {
-
+            this.repository = repository;
         }
 
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult TempMethod()
         {
             try
             {
@@ -57,9 +65,11 @@ namespace CarMatrix.Controllers
             }
         }
 
-        public ActionResult GetPersons()
+
+        public ActionResult GetRecords()
         {
-            return Json("", JsonRequestBehavior.AllowGet);
+            List<Record> records = new List<Record>();
+            return Json(records, JsonRequestBehavior.AllowGet);
         }
     }
 }

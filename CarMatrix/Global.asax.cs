@@ -6,6 +6,11 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Autofac;
+using Autofac.Integration.Mvc;
+using CarMatrix.Caching;
+using CarMatrix.Infrastructure;
+using CarMatrixData.Models;
 
 namespace CarMatrix
 {
@@ -16,6 +21,7 @@ namespace CarMatrix
     {
         protected void Application_Start()
         {
+            DependencyInject();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -23,6 +29,19 @@ namespace CarMatrix
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+        }
+
+        private void DependencyInject()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterControllers(typeof(MvcApplication).Assembly);
+
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerHttpRequest();
+            builder.RegisterType<ModelsContainer>().As<ModelsContainer>().InstancePerHttpRequest();
+            builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().SingleInstance();
+
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
 }

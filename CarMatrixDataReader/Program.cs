@@ -16,7 +16,8 @@ namespace CarMatrixDataReader
     {
         static void Main(string[] args)
         {
-            string path = @"D:\temp.xlsx";
+//            string path = @"D:\temp.xlsx";
+            string path = ConfigurationManager.AppSettings["file_path"];
             FileOperator fo = new FileOperator(path);
             fo.LoadExcelData();
             DbOperator.InsertData(fo.DataSet);
