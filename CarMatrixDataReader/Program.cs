@@ -37,7 +37,7 @@ namespace CarMatrixDataReader
                     for (int i = 0; i < 100; i++)
                     {
                         Record p = new Record();
-                        p.Brands = i.ToString();
+                        //p.Brands = i.ToString();
                         p.Address = "百度大厦";
                         records.Add(p);
                     }

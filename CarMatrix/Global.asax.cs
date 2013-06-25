@@ -41,7 +41,7 @@ namespace CarMatrix
             builder.RegisterType<ModelsContainer>().As<ModelsContainer>().InstancePerHttpRequest();
             builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().SingleInstance();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerHttpRequest();
-            builder.RegisterType<HomeController>().OnActivated(h => h.Instance.CacheManager = h.Context.Resolve<ICacheManager>());
+            //builder.RegisterType<HomeController>().OnActivated(h => h.Instance.CacheManager = h.Context.Resolve<ICacheManager>());
 
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

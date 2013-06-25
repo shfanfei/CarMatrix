@@ -9,13 +9,19 @@
 
 namespace CarMatrixData.Models
 {
-    #pragma warning disable 1573
     using System;
     using System.Collections.Generic;
     
     public partial class Brands
     {
+        public Brands()
+        {
+            this.Record = new HashSet<Record>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
+    
+        public virtual ICollection<Record> Record { get; set; }
     }
 }

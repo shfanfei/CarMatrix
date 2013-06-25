@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using CarMatrix.Caching;
 using CarMatrix.Infrastructure;
+using CarMatrix.Models;
 using CarMatrixData.Models;
 using ModelEntity = CarMatrixData.Models.Models;
+using CarMatrix.Extensions;
+using System.Threading;
+
 
 namespace CarMatrix.Controllers
 {
     public class HomeController : Controller
     {
         private IUnitOfWork unitOfWork;
-        public ICacheManager CacheManager { get; set; }
 
         public HomeController(IUnitOfWork unitOfWork)
         {
@@ -26,10 +30,63 @@ namespace CarMatrix.Controllers
             return View();
         }
 
+        public JsonResult GetRecords(string buyTime, string brands, string model)
+        {
+            ResponseContent rc = new ResponseContent();
+            try
+            {
+                Thread.Sleep(2000);
+                List<Expression<Func<Record, bool>>> expressions = new List<Expression<Func<Record, bool>>>();
+                if (!string.IsNullOrEmpty(buyTime))
+                {
+                    int buyYearId = Convert.ToInt32(buyTime);
+                    if (buyYearId != -1)
+                        expressions.Add(r => r.BuyYearId == buyYearId);
+                }
+
+                if (!string.IsNullOrEmpty(brands))
+                {
+                    int brandsId = Convert.ToInt32(brands);
+                    if (brandsId != -1)
+                        expressions.Add(r => r.BrandsId == brandsId);
+                }
+
+                if (!string.IsNullOrEmpty(model))
+                {
+                    int modelsId = Convert.ToInt32(model);
+                    if (modelsId != -1)
+                        expressions.Add(r => r.ModelId == modelsId);
+                }
+
+                var records = (from r in this.unitOfWork.GetRecordsFilter(expressions.ToArray())
+                               select new
+                               {
+                                   Lat = r.Lat,
+                                   Lnt = r.Lnt
+                               }).ToList();
+                if (records != null)
+                {
+                    rc.Result = 1;
+                    rc.Message = "Get Data success!";
+                    rc.Data = records;
+                }
+            }
+            catch (Exception ex)
+            {
+                rc.Message = ex.OutputMessage();
+            }
+
+            return Json(rc, JsonRequestBehavior.AllowGet);
+        }
+
         private void AddSelectItems()
         {
-            IEnumerable<BuyTime> buyTimes = this.unitOfWork.GetBuyTimes();
+            #region add select items
+            SelectListItem defaultItem = new SelectListItem() { Text = "全部", Value = "-1", Selected = true };
+
+            IEnumerable<BuyYear> buyTimes = this.unitOfWork.GetBuyTimes();
             List<SelectListItem> buyTimesItems = new List<SelectListItem>();
+            buyTimesItems.Add(defaultItem);
             foreach (var buyTime in buyTimes)
             {
                 SelectListItem item = new SelectListItem();
@@ -37,10 +94,11 @@ namespace CarMatrix.Controllers
                 item.Value = buyTime.Id.ToString();
                 buyTimesItems.Add(item);
             }
-            ViewBag.BuyTime = buyTimesItems;
+            ViewData["BuyYear"] = buyTimesItems;
 
             IEnumerable<Brands> brands = this.unitOfWork.GetBrands();
             List<SelectListItem> brandsItems = new List<SelectListItem>();
+            brandsItems.Add(defaultItem);
             foreach (var brand in brands)
             {
                 SelectListItem item = new SelectListItem();
@@ -48,10 +106,11 @@ namespace CarMatrix.Controllers
                 item.Value = brand.Id.ToString();
                 brandsItems.Add(item);
             }
-            ViewBag.Models = brandsItems;
+            ViewData["Models"] = brandsItems;
 
             IEnumerable<ModelEntity> models = this.unitOfWork.GetModels();
             List<SelectListItem> modelItems = new List<SelectListItem>();
+            modelItems.Add(defaultItem);
             foreach (var model in models)
             {
                 SelectListItem item = new SelectListItem();
@@ -59,55 +118,8 @@ namespace CarMatrix.Controllers
                 item.Value = model.Id.ToString();
                 modelItems.Add(item);
             }
-            ViewBag.Brands = modelItems; 
-        }
-
-        public ActionResult TempMethod()
-        {
-            try
-            {
-                using (var container = new ModelsContainer())
-                {
-                    var record = container.RecordSet.FirstOrDefault();
-                    if (record == null)
-                    {
-                        record = new Record()
-                        {
-                            Address = "address",
-                            Both = DateTime.Now,
-                            Brands = "brands",
-                            City = "City",
-                            Gender = true,
-                            Lat = 2.0001,
-                            Lnt = 3.0002,
-                            Model = "Model",
-                            Time = DateTime.Now,
-                            Zip = "zip"
-                        };
-                        container.RecordSet.Add(record);
-                        container.SaveChanges();
-                        return Content("success");
-                    }
-                    else
-                        return Content("not null");
-                }
-            }
-            catch (Exception ex)
-            {
-                string msg = ex.Message + " ";
-                if (ex.InnerException != null)
-                {
-                    msg += ex.InnerException.Message;
-                }
-                return Content(msg);
-            }
-        }
-
-
-        public ActionResult GetRecords()
-        {
-            List<Record> records = new List<Record>();
-            return Json(records, JsonRequestBehavior.AllowGet);
+            ViewData["Brands"] = modelItems;
+            #endregion
         }
     }
 }

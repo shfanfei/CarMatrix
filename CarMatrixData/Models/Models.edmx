@@ -9,23 +9,38 @@
     <EntitySet Name="RecordSet" EntityType="Models.Store.RecordSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BrandsSet" EntityType="Models.Store.BrandsSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ModelsSet" EntityType="Models.Store.ModelsSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="BuyTimeSet" EntityType="Models.Store.BuyTimeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BuyYearSet" EntityType="Models.Store.BuyYearSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BrandsRecord" Association="Models.Store.BrandsRecord">
+      <End Role="Brands" EntitySet="BrandsSet" />
+      <End Role="Record" EntitySet="RecordSet" />
+    </AssociationSet>
+    <AssociationSet Name="ModelsRecord" Association="Models.Store.ModelsRecord">
+      <End Role="Models" EntitySet="ModelsSet" />
+      <End Role="Record" EntitySet="RecordSet" />
+    </AssociationSet>
+    <AssociationSet Name="BuyYearRecord" Association="Models.Store.BuyYearRecord">
+      <End Role="BuyYear" EntitySet="BuyYearSet" />
+      <End Role="Record" EntitySet="RecordSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="RecordSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Brands" Type="nvarchar" Nullable="true" />
-    <Property Name="Model" Type="nvarchar" Nullable="true" />
+    <Property Name="BrandsId" Type="int" Nullable="false" />
+    <Property Name="ModelId" Type="int" Nullable="false" />
     <Property Name="City" Type="nvarchar" Nullable="true" />
-    <Property Name="Time" Type="datetime" Nullable="true" />
+    <Property Name="BuyYearId" Type="int" Nullable="false" />
     <Property Name="Both" Type="datetime" Nullable="true" />
     <Property Name="Gender" Type="bit" Nullable="false" />
     <Property Name="Address" Type="nvarchar" Nullable="true" />
     <Property Name="Zip" Type="nvarchar" Nullable="true" />
     <Property Name="Lat" Type="float" Nullable="true" />
     <Property Name="Lnt" Type="float" Nullable="true" />
+    <Property Name="Brands_Id" Type="int" Nullable="false" />
+    <Property Name="Models_Id" Type="int" Nullable="false" />
+    <Property Name="BuyYear_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="BrandsSet">
     <Key>
@@ -41,13 +56,49 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="true" />
   </EntityType>
-  <EntityType Name="BuyTimeSet">
+  <EntityType Name="BuyYearSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Time" Type="datetime" Nullable="false" />
   </EntityType>
+  <Association Name="BrandsRecord">
+    <End Role="Brands" Type="Models.Store.BrandsSet" Multiplicity="1" />
+    <End Role="Record" Type="Models.Store.RecordSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Brands">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Record">
+        <PropertyRef Name="Brands_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ModelsRecord">
+    <End Role="Models" Type="Models.Store.ModelsSet" Multiplicity="1" />
+    <End Role="Record" Type="Models.Store.RecordSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Models">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Record">
+        <PropertyRef Name="Models_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BuyYearRecord">
+    <End Role="BuyYear" Type="Models.Store.BuyYearSet" Multiplicity="1" />
+    <End Role="Record" Type="Models.Store.RecordSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BuyYear">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Record">
+        <PropertyRef Name="BuyYear_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -56,23 +107,38 @@
           <EntitySet Name="RecordSet" EntityType="Models.Record" />
           <EntitySet Name="BrandsSet" EntityType="Models.Brands" />
           <EntitySet Name="ModelsSet" EntityType="Models.Models" />
-          <EntitySet Name="BuyTimeSet" EntityType="Models.BuyTime" />
+          <EntitySet Name="BuyYearSet" EntityType="Models.BuyYear" />
+          <AssociationSet Name="BrandsRecord" Association="Models.BrandsRecord">
+            <End Role="Brands" EntitySet="BrandsSet" />
+            <End Role="Record" EntitySet="RecordSet" />
+          </AssociationSet>
+          <AssociationSet Name="ModelsRecord" Association="Models.ModelsRecord">
+            <End Role="Models" EntitySet="ModelsSet" />
+            <End Role="Record" EntitySet="RecordSet" />
+          </AssociationSet>
+          <AssociationSet Name="BuyYearRecord" Association="Models.BuyYearRecord">
+            <End Role="BuyYear" EntitySet="BuyYearSet" />
+            <End Role="Record" EntitySet="RecordSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Record">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Brands" />
-          <Property Type="String" Name="Model" />
+          <Property Type="Int32" Name="BrandsId" Nullable="false" />
+          <Property Type="Int32" Name="ModelId" Nullable="false" />
           <Property Type="String" Name="City" />
-          <Property Type="DateTime" Name="Time" />
+          <Property Type="Int32" Name="BuyYearId" Nullable="false" />
           <Property Type="DateTime" Name="Both" />
           <Property Type="Boolean" Name="Gender" Nullable="false" />
           <Property Type="String" Name="Address" />
           <Property Type="String" Name="Zip" />
           <Property Type="Double" Name="Lat" />
           <Property Type="Double" Name="Lnt" />
+          <NavigationProperty Name="Brands" Relationship="Models.BrandsRecord" FromRole="Record" ToRole="Brands" />
+          <NavigationProperty Name="Models" Relationship="Models.ModelsRecord" FromRole="Record" ToRole="Models" />
+          <NavigationProperty Name="BuyYear" Relationship="Models.BuyYearRecord" FromRole="Record" ToRole="BuyYear" />
         </EntityType>
         <EntityType Name="Brands">
           <Key>
@@ -80,6 +146,7 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Record" Relationship="Models.BrandsRecord" FromRole="Brands" ToRole="Record" />
         </EntityType>
         <EntityType Name="Models">
           <Key>
@@ -87,14 +154,28 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" />
+          <NavigationProperty Name="Record" Relationship="Models.ModelsRecord" FromRole="Models" ToRole="Record" />
         </EntityType>
-        <EntityType Name="BuyTime">
+        <EntityType Name="BuyYear">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="DateTime" Name="Time" Nullable="false" />
+          <NavigationProperty Name="Record" Relationship="Models.BuyYearRecord" FromRole="BuyYear" ToRole="Record" />
         </EntityType>
+        <Association Name="BrandsRecord">
+          <End Type="Models.Brands" Role="Brands" Multiplicity="1" />
+          <End Type="Models.Record" Role="Record" Multiplicity="*" />
+        </Association>
+        <Association Name="ModelsRecord">
+          <End Type="Models.Models" Role="Models" Multiplicity="1" />
+          <End Type="Models.Record" Role="Record" Multiplicity="*" />
+        </Association>
+        <Association Name="BuyYearRecord">
+          <End Type="Models.BuyYear" Role="BuyYear" Multiplicity="1" />
+          <End Type="Models.Record" Role="Record" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -105,10 +186,10 @@
       <EntityTypeMapping TypeName="IsTypeOf(Models.Record)">
         <MappingFragment StoreEntitySet="RecordSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Brands" ColumnName="Brands" />
-          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="BrandsId" ColumnName="BrandsId" />
+          <ScalarProperty Name="ModelId" ColumnName="ModelId" />
           <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="BuyYearId" ColumnName="BuyYearId" />
           <ScalarProperty Name="Both" ColumnName="Both" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Address" ColumnName="Address" />
@@ -134,14 +215,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="BuyTimeSet">
-      <EntityTypeMapping TypeName="IsTypeOf(Models.BuyTime)">
-        <MappingFragment StoreEntitySet="BuyTimeSet">
+    <EntitySetMapping Name="BuyYearSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Models.BuyYear)">
+        <MappingFragment StoreEntitySet="BuyYearSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Time" ColumnName="Time" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="BrandsRecord" TypeName="Models.BrandsRecord" StoreEntitySet="RecordSet">
+      <EndProperty Name="Brands">
+        <ScalarProperty Name="Id" ColumnName="Brands_Id" />
+      </EndProperty>
+      <EndProperty Name="Record">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ModelsRecord" TypeName="Models.ModelsRecord" StoreEntitySet="RecordSet">
+      <EndProperty Name="Models">
+        <ScalarProperty Name="Id" ColumnName="Models_Id" />
+      </EndProperty>
+      <EndProperty Name="Record">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BuyYearRecord" TypeName="Models.BuyYearRecord" StoreEntitySet="RecordSet">
+      <EndProperty Name="BuyYear">
+        <ScalarProperty Name="Id" ColumnName="BuyYear_Id" />
+      </EndProperty>
+      <EndProperty Name="Record">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

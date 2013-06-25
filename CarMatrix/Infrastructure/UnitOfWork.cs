@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using CarMatrix.Infrastructure;
 using CarMatrixData.Models;
@@ -14,12 +15,12 @@ namespace CarMatrix.Infrastructure
         private IRepository<Record> recordRepository;
         private IRepository<Brands> brandsRepository;
         private IRepository<ModelEntity> modelsRepository;
-        private IRepository<BuyTime> buyTimeRepository;
+        private IRepository<BuyYear> buyTimeRepository;
 
-        public UnitOfWork(IRepository<Record> recordRepository, 
+        public UnitOfWork(IRepository<Record> recordRepository,
             IRepository<Brands> brandsRepository,
             IRepository<ModelEntity> modelsRepository,
-            IRepository<BuyTime> buyTimeRepository)
+            IRepository<BuyYear> buyTimeRepository)
         {
             this.recordRepository = recordRepository;
             this.brandsRepository = brandsRepository;
@@ -34,8 +35,6 @@ namespace CarMatrix.Infrastructure
 
         public IEnumerable<Brands> GetBrands()
         {
-            //Mock<Brands> mockBrands = new Mock<Brands>();
-            //mockBrands.Setup().Returns
             return this.brandsRepository.GetEntities;
         }
 
@@ -44,9 +43,29 @@ namespace CarMatrix.Infrastructure
             return this.modelsRepository.GetEntities;
         }
 
-        public IEnumerable<BuyTime> GetBuyTimes()
+        public IEnumerable<BuyYear> GetBuyTimes()
         {
             return this.buyTimeRepository.GetEntities;
+        }
+
+        public IEnumerable<Record> GetRecordsFilter(params Expression<Func<Record, bool>>[] precidates)
+        {
+            if (precidates == null)
+                throw new ArgumentNullException("precidates");
+
+            IQueryable<Record> results = null;
+            int count = precidates.Count();
+            if (count > 0)
+            {
+                Expression<Func<Record, bool>> pre = precidates.ElementAt(0);
+                results = this.recordRepository.GetEntities.Where(pre);
+                for (int i = 1; i < count; i++)
+                {
+                    Expression<Func<Record, bool>> p = precidates.ElementAt(i);
+                    results = results.Where(p);
+                }
+            }
+            return results;
         }
     }
 }

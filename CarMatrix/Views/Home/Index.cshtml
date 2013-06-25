@@ -2,32 +2,107 @@
     ViewBag.Title = "Inde Page";
 }
 
+<style type="text/css">
+    .hide
+    {
+        display: none;
+    }
+
+    .progress
+    {
+        z-index: 2000;
+    }
+
+    .mask
+    {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: #000000;
+    }
+</style>
+
 @section scripts{
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=AA312727dc829b01e94d1361a34be8f1"></script>
     <script type="text/javascript">
+        var map = new BMap.Map("map-div");
+        var center = new BMap.Point(121.481888, 31.233229);
         $(function () {
-            var map = new BMap.Map("map-div");
-            var i = 0;
+            setCenterAndZoom();
+            $("#search-button").unbind().bind("click", function () {
+                var time = $("#buyTime").val();
+                var brands = $("#brands").val();
+                var models = $("#models").val();
 
-            $.get("/Home/GetRecords", function (data) {
-                $.each(data, function (k, v) {
-                    if (i == 0) {
-                        map.centerAndZoom(new BMap.Point(v.Lnt, v.Lat), 14);
-                        i++;
+                changeLoadingLayVisible(true);
+                $.get("/Home/GetRecords", { buyTime: time, brands: brands, model: models }, function (data) {
+                    changeLoadingLayVisible(false);
+                    map.clearOverlays();
+                    if (data.Result == 1) {
+                        addRemarks(data.Data);
+                    } else {
+                        alert(data.Message);
                     }
-                    var mark = new BMap.Marker(new BMap.Point(v.Lnt, v.Lat));
-                    map.addOverlay(mark);
                 });
             });
+            //var i = 0;
+
+            //$.get("/Home/GetRecords", function (data) {
+            //    $.each(data, function (k, v) {
+            //        if (i == 0) {
+            //            map.centerAndZoom(new BMap.Point(v.Lnt, v.Lat), 14);
+            //            i++;
+            //        }
+            //        var mark = new BMap.Marker(new BMap.Point(v.Lnt, v.Lat));
+            //        map.addOverlay(mark);
+            //    });
+            //});
         });
+
+        function addRemarks(remarks) {
+
+        }
+
+        function setCenterAndZoom() {
+            map.centerAndZoom(center, 14);
+        }
+
+        function changeLoadingLayVisible(isVisible) {
+            var img = $("#progressImage");
+            var mask = $("#maskOfProgressImage");
+            if (isVisible) {
+                img.show().css({
+                    "position": "fixed",
+                    "top": "50%",
+                    "left": "50%",
+                    "margin-top": function () { return -1 * img.height() / 2; },
+                    "margin-left": function () { return -1 * img.width() / 2; }
+                });
+                mask.show().css("opacity", "0.3");
+            } else {
+                img.hide();
+                mask.hide();
+            }
+        }
     </script>
 }
 
+<h2>条件选择</h2>
 <div id="conditions-div">
-    @Html.DropDownList("buyTime", ViewBag.BuyTime as IEnumerable<SelectListItem>)
-    @Html.DropDownList("brands", ViewBag.BuyTime as IEnumerable<SelectListItem>)
-    @Html.DropDownList("models", ViewBag.BuyTime as IEnumerable<SelectListItem>)
+    <span>购买年份：</span>
+    @Html.DropDownList("BuyYear")
+    <span>款式：</span>
+    @Html.DropDownList("Brands")
+    <span>型号：</span>
+    @Html.DropDownList("Models")
+    <span>&nbsp;</span><span><input id="search-button" type="button" value="查询" /></span>
 </div>
 
 <div id="map-div" style="width: 600px; height: 500px">
 </div>
+
+<img id="progressImage" class="progress hide" alt="" src="@Url.Content("~/Images/loading.png")" />
+<div id="maskOfProgressImage" class="mask hide"></div>

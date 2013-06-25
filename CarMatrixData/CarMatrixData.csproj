@@ -63,16 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Brands.cs">
-      <DependentUpon>Models.Entities.tt</DependentUpon>
+      <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Brands_Mapping.cs">
-      <DependentUpon>Models.Mapping.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BuyTime.cs">
-      <DependentUpon>Models.Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BuyTime_Mapping.cs">
-      <DependentUpon>Models.Mapping.tt</DependentUpon>
+    <Compile Include="Models\BuyYear.cs">
+      <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Models.Context.cs">
       <AutoGen>True</AutoGen>
@@ -80,36 +74,10 @@
       <DependentUpon>Models.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Models.cs">
-      <DependentUpon>Models.Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Models.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Models.Entities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Models.Mapping.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Models.Mapping.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Models1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Models_Mapping.cs">
-      <DependentUpon>Models.Mapping.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Record.cs">
-      <DependentUpon>Models.Entities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Record_Mapping.cs">
-      <DependentUpon>Models.Mapping.tt</DependentUpon>
+      <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -119,10 +87,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\Models.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Models.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <EntityDeploy Include="Models\Models.edmx" />
     <None Include="App.Config" />
     <None Include="Models\Models.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -133,16 +98,6 @@
       <DependentUpon>Models.edmx</DependentUpon>
     </None>
     <None Include="Models\Models.edmx.sqlce" />
-    <None Include="Models\Models.Entities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Models.Entities.cs</LastGenOutput>
-      <DependentUpon>Models.edmx</DependentUpon>
-    </None>
-    <None Include="Models\Models.Mapping.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Models.Mapping.cs</LastGenOutput>
-      <DependentUpon>Models.edmx</DependentUpon>
-    </None>
     <None Include="Models\Models.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Models1.cs</LastGenOutput>

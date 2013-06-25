@@ -20,11 +20,14 @@ namespace CarMatrixData.Models
         {
         }
     
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    throw new UnintentionalCodeFirstException();
-        //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
     
         public DbSet<Record> RecordSet { get; set; }
+        public DbSet<Brands> BrandsSet { get; set; }
+        public DbSet<Models> ModelsSet { get; set; }
+        public DbSet<BuyYear> BuyYearSet { get; set; }
     }
 }
