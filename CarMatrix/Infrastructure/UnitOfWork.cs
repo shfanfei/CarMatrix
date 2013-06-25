@@ -35,7 +35,7 @@ namespace CarMatrix.Infrastructure
         public IEnumerable<Brands> GetBrands()
         {
             //Mock<Brands> mockBrands = new Mock<Brands>();
-            //mockBrands.Setup( m=>mk
+            //mockBrands.Setup().Returns
             return this.brandsRepository.GetEntities;
         }
 
