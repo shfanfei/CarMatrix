@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CarMatrix.Caching
+namespace CarMatrixCore.Caching
 {
     public static class CacheExtensions
     {

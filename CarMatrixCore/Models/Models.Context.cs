@@ -9,8 +9,11 @@
 
 namespace CarMatrixData.Models
 {
-    using System;
     using System.Data.Entity;
+    using System.Reflection;
+    using System.Data.Entity.ModelConfiguration;
+    using System;
+    using System.Linq;
     using System.Data.Entity.Infrastructure;
     
     public partial class ModelsContainer : DbContext
@@ -22,12 +25,17 @@ namespace CarMatrixData.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            var typesToRegister = Assembly.Load("CarMatrixCore").GetTypes()
+            .Where(type => !String.IsNullOrEmpty(type.Namespace))
+            .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var type in typesToRegister)
+            {
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.Configurations.Add(configurationInstance);
+            }
+
+            base.OnModelCreating(modelBuilder);
         }
-    
-        public DbSet<Record> RecordSet { get; set; }
-        public DbSet<Brands> BrandsSet { get; set; }
-        public DbSet<Models> ModelsSet { get; set; }
-        public DbSet<BuyYear> BuyYearSet { get; set; }
+
     }
 }

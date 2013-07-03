@@ -16,9 +16,11 @@ namespace CarMatrixDataReader
     public class AddressTrans
     {
         private string mapKey;
+        private HttpClient httpClient;
 
         public AddressTrans()
         {
+            httpClient = new HttpClient();
             mapKey = ConfigurationManager.AppSettings["map_key"];
         }
 
@@ -29,7 +31,6 @@ namespace CarMatrixDataReader
 
         public async Task TransLocation(Record record, string url)
         {
-            var httpClient = new HttpClient();
             string content = await httpClient.GetStringAsync(url);
             ResolvePersonLocation(content, record);
         }
@@ -55,8 +56,11 @@ namespace CarMatrixDataReader
                                    .Elements("location")
                                    .Elements("lng")
                                select a.Value).FirstOrDefault();
-                    record.Lat = Convert.ToDouble(lat);
-                    record.Lnt = Convert.ToDouble(lnt);
+                    if (!string.IsNullOrEmpty(lat) && !string.IsNullOrEmpty(lnt))
+                    {
+                        record.Lat = Convert.ToDouble(lat);
+                        record.Lnt = Convert.ToDouble(lnt);
+                    }
                 }
                 else
                 {

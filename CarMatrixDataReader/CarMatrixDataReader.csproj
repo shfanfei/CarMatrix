@@ -67,9 +67,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarMatrixData\CarMatrixData.csproj">
+    <ProjectReference Include="..\CarMatrixCore\CarMatrixCore.csproj">
       <Project>{de10c897-7fd5-4656-9f0c-6f6eec91ce9d}</Project>
-      <Name>CarMatrixData</Name>
+      <Name>CarMatrixCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

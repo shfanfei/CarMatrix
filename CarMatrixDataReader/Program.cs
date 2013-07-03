@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using CarMatrixData;
 using CarMatrixData.Models;
+using CarMatrixCore.Extensions;
+
 
 namespace CarMatrixDataReader
 {
@@ -16,45 +18,69 @@ namespace CarMatrixDataReader
     {
         static void Main(string[] args)
         {
-//            string path = @"D:\temp.xlsx";
-            string path = ConfigurationManager.AppSettings["file_path"];
-            FileOperator fo = new FileOperator(path);
-            fo.LoadExcelData();
-            DbOperator.InsertData(fo.DataSet);
-            
-            //GetHttpContent();
-
-            Console.WriteLine("{0}", "End");
+            Task task = Task.Factory.StartNew(() =>
+                {
+                    string path = ConfigurationManager.AppSettings["file_path"];
+                    FileOperator fo = new FileOperator(path);
+                    fo.LoadExcelData();
+                    DbOperator.InsertData(fo.DataSet);
+                });
+            task.Wait();
+            Console.WriteLine("----Finish Read Excel Data----");
+            GetHttpContent();
+            Console.WriteLine("{0}", "----All Finish----");
             Console.ReadKey();
         }
 
-        static void GetHttpContent()
+        static async void GetHttpContent()
         {
-            Task task = Task.Factory.StartNew(() =>
+            //Task task = Task.Factory.StartNew(() =>
+            //    {
+            try
+            {
+                AddressTrans at = new AddressTrans();
+                using (var container = new ModelsContainer())
                 {
-                    AddressTrans at = new AddressTrans();
-                    List<Record> records = new List<Record>();
-                    for (int i = 0; i < 100; i++)
+                    var records = container.Set<Record>().ToList();
+                    int cursor = 0;
+                    foreach (var record in records)
                     {
-                        Record p = new Record();
-                        //p.Brands = i.ToString();
-                        p.Address = "百度大厦";
-                        records.Add(p);
-                    }
-
-                    foreach (var person in records)
-                    {
-                        Task.Delay(100).Wait();
-                        Task t = Task.Factory.StartNew(async () =>
+                        if (record.Lat == null || record.Lnt == null)
+                        {
+                            Thread.Sleep(20);
+                            if (!string.IsNullOrEmpty(record.Address))
                             {
-                                string url = at.BuildeUrl(person.Address.Trim());
-                                await at.TransLocation(person, url);
-                                Console.WriteLine("Name : {0}, Lat = {1}, Lnt = {2}, ThreadId = {3}",
-                                    person.Brands, person.Lat, person.Lnt, Thread.CurrentThread.ManagedThreadId);
-
-                            });
+                                try
+                                {
+                                    string url = at.BuildeUrl(record.Address.Trim().Replace(" ", ""));
+                                    await at.TransLocation(record, url);
+                                    Console.WriteLine("Lat = {0}, Lnt = {1}, cursor = {2}", record.Lat, record.Lnt, cursor);
+                                }
+                                catch (Exception ex)
+                                {
+                                    string msg = ex.OutputMessage();
+                                    Console.WriteLine("trans address exception {0}", msg);
+                                }
+                                cursor++;
+                                if (cursor == 100)
+                                {
+                                    cursor = 0;
+                                    container.SaveChanges();
+                                }
+                            }
+                        }
                     }
-                });
+                    container.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.OutputMessage();
+                Console.WriteLine("exception message:{0}", msg);
+            }
+            //});
+            //task.Wait();
+            Console.WriteLine("----Finish Trans Location----");
         }
     }
 }

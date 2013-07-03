@@ -5,7 +5,7 @@ using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace CarMatrix.Caching
+namespace CarMatrixCore.Caching
 {
     public class MemoryCacheManager: ICacheManager
     {

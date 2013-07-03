@@ -175,12 +175,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Caching\CacheExtensions.cs" />
-    <Compile Include="Caching\ICacheManager.cs" />
-    <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Extensions\ExceptionExtension.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -315,9 +311,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarMatrixData\CarMatrixData.csproj">
+    <ProjectReference Include="..\CarMatrixCore\CarMatrixCore.csproj">
       <Project>{de10c897-7fd5-4656-9f0c-6f6eec91ce9d}</Project>
-      <Name>CarMatrixData</Name>
+      <Name>CarMatrixCore</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
