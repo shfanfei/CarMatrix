@@ -57,6 +57,7 @@
     <Compile Include="AddressTrans.cs" />
     <Compile Include="DbOperator.cs" />
     <Compile Include="FileOperator.cs" />
+    <Compile Include="LbsOperator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

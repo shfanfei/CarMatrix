@@ -4,12 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using CarMatrix.Caching;
+using CarMatrixCore.Extensions;
 using CarMatrix.Infrastructure;
 using CarMatrix.Models;
 using CarMatrixData.Models;
 using ModelEntity = CarMatrixData.Models.Models;
-using CarMatrix.Extensions;
 using System.Threading;
 
 
@@ -35,27 +34,26 @@ namespace CarMatrix.Controllers
             ResponseContent rc = new ResponseContent();
             try
             {
-                Thread.Sleep(2000);
                 List<Expression<Func<Record, bool>>> expressions = new List<Expression<Func<Record, bool>>>();
                 if (!string.IsNullOrEmpty(buyTime))
                 {
                     int buyYearId = Convert.ToInt32(buyTime);
                     if (buyYearId != -1)
-                        expressions.Add(r => r.BuyYearId == buyYearId);
+                        expressions.Add(r => r.BuyYear != null && r.BuyYear.Id == buyYearId);
                 }
 
                 if (!string.IsNullOrEmpty(brands))
                 {
                     int brandsId = Convert.ToInt32(brands);
                     if (brandsId != -1)
-                        expressions.Add(r => r.BrandsId == brandsId);
+                        expressions.Add(r => r.Brands != null && r.Brands.Id == brandsId);
                 }
 
                 if (!string.IsNullOrEmpty(model))
                 {
                     int modelsId = Convert.ToInt32(model);
                     if (modelsId != -1)
-                        expressions.Add(r => r.ModelId == modelsId);
+                        expressions.Add(r => r.Models != null && r.Models.Id == modelsId);
                 }
 
                 var records = (from r in this.unitOfWork.GetRecordsFilter(expressions.ToArray())

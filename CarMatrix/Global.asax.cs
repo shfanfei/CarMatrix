@@ -8,10 +8,11 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
-using CarMatrix.Caching;
+using CarMatrixCore.Extensions;
 using CarMatrix.Controllers;
 using CarMatrix.Infrastructure;
 using CarMatrixData.Models;
+using CarMatrixCore.Caching;
 
 namespace CarMatrix
 {

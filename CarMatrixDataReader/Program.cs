@@ -18,17 +18,19 @@ namespace CarMatrixDataReader
     {
         static void Main(string[] args)
         {
-            Task task = Task.Factory.StartNew(() =>
-                {
-                    string path = ConfigurationManager.AppSettings["file_path"];
-                    FileOperator fo = new FileOperator(path);
-                    fo.LoadExcelData();
-                    DbOperator.InsertData(fo.DataSet);
-                });
-            task.Wait();
-            Console.WriteLine("----Finish Read Excel Data----");
-            GetHttpContent();
-            Console.WriteLine("{0}", "----All Finish----");
+            //Task task = Task.Factory.StartNew(() =>
+            //    {
+            //        string path = ConfigurationManager.AppSettings["file_path"];
+            //        FileOperator fo = new FileOperator(path);
+            //        fo.LoadExcelData();
+            //        DbOperator.InsertData(fo.DataSet);
+            //    });
+            //task.Wait();
+            //Console.WriteLine("----Finish Read Excel Data----");
+            //GetHttpContent();
+            //Console.WriteLine("{0}", "----All Finish----");
+            //LbsOperator.CreateDatabox("TestBox");
+            LbsOperator.CreatePoin();
             Console.ReadKey();
         }
 

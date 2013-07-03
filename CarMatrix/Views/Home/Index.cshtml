@@ -33,9 +33,9 @@
         $(function () {
             setCenterAndZoom();
             $("#search-button").unbind().bind("click", function () {
-                var time = $("#buyTime").val();
-                var brands = $("#brands").val();
-                var models = $("#models").val();
+                var time = $("#BuyYear").val();
+                var brands = $("#Brands").val();
+                var models = $("#Models").val();
 
                 changeLoadingLayVisible(true);
                 $.get("/Home/GetRecords", { buyTime: time, brands: brands, model: models }, function (data) {
@@ -63,7 +63,10 @@
         });
 
         function addRemarks(remarks) {
-
+            $.each(remarks, function (k, v) {
+                var mark = new BMap.Marker(new BMap.Point(v.Lnt, v.Lat));
+                map.addOverlay(mark);
+            });
         }
 
         function setCenterAndZoom() {
