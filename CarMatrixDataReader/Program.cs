@@ -18,6 +18,24 @@ namespace CarMatrixDataReader
     {
         static void Main(string[] args)
         {
+            InitApplicationData();
+            using (var container = new ModelsContainer())
+            {
+                var records = container.Set<Record>().ToList();
+                LbsOperator oper = new LbsOperator();
+                foreach (var record in records)
+                {
+                    try
+                    {
+                        oper.CreatePoin(record);
+                    }
+                    catch (Exception ex)
+                    {
+                        string msg = ex.OutputMessage();
+                        Console.WriteLine(msg);
+                    }
+                }
+            }
             //Task task = Task.Factory.StartNew(() =>
             //    {
             //        string path = ConfigurationManager.AppSettings["file_path"];
@@ -30,8 +48,14 @@ namespace CarMatrixDataReader
             //GetHttpContent();
             //Console.WriteLine("{0}", "----All Finish----");
             //LbsOperator.CreateDatabox("TestBox");
-            LbsOperator.CreatePoin();
+            //LbsOperator.CreatePoin();
             Console.ReadKey();
+        }
+
+        static void InitApplicationData()
+        {
+            ApplicationData.MapKey = ConfigurationManager.AppSettings["map_key"];
+            ApplicationData.DataboxId = ConfigurationManager.AppSettings["databox_id"];
         }
 
         static async void GetHttpContent()

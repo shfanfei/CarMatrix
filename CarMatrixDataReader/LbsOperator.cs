@@ -4,12 +4,20 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CarMatrixData.Models;
 
 namespace CarMatrixDataReader
 {
     public class LbsOperator
     {
-        public static async void CreateDatabox(string boxName)
+        private HttpClient httpClient;
+
+        public LbsOperator()
+        {
+            this.httpClient = new HttpClient();
+        }
+
+        public async void CreateDatabox(string boxName)
         {
             string url = "http://api.map.baidu.com/geodata/databox?method=create";
             var httpClient = new HttpClient();
@@ -22,18 +30,17 @@ namespace CarMatrixDataReader
             Console.WriteLine(response.Content);
         }
 
-        public static async void CreatePoin()
+        public async void CreatePoin(Record record)
         {
             string url = "http://api.map.baidu.com/geodata/poi?method=create";
-            var httpClient = new HttpClient();
             var content = new FormUrlEncodedContent(new Dictionary<string, string>() { 
-                {"databox_id","15263"},
-                {"name","name3"},
-                {"address","address3"},
-                {"original_lat","31.218007745516"},
-                {"original_lon","121.4870985565"},
+                {"databox_id",ApplicationData.DataboxId },
+                {"name",record.Id.ToString()},
+                {"address",record.Address},
+                {"original_lat",record.Lat.ToString()},
+                {"original_lon",record.Lnt.ToString()},
                 {"original_coord_type","3"},
-                {"ak","6c72e0845dfce8ec0a3d432c33b2f778"}
+                {"ak",ApplicationData.MapKey}
             });
             var response = await httpClient.PostAsync(url, content);
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);

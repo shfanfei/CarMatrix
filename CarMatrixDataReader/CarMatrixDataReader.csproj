@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressTrans.cs" />
+    <Compile Include="ApplicationData.cs" />
     <Compile Include="DbOperator.cs" />
     <Compile Include="FileOperator.cs" />
     <Compile Include="LbsOperator.cs" />

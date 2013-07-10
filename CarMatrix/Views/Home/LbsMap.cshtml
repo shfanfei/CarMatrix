@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "用户信息显示";
+}
+
+<style type="text/css">
+    body, html
+    {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #fff;
+        font-size: 12px;
+        font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif,"微软雅黑";
+    }
+
+    #main-content
+    {
+        margin: 0 auto;
+        width: 960px;
+        margin-top: 68px;
+    }
+
+    #top-bar
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #385AA4;
+        width: 100%;
+        height: 60px;
+    }
+
+    #logo-div
+    {
+        position:absolute;
+        top:0;
+        left:50%;
+        margin-left:-480px;
+    }
+
+        #logo-div img
+        {
+            margin-top:8px;
+        }
+
+    #login-div
+    {
+        position:absolute;
+        top:0;
+        left:50%;
+        margin-left:400px;
+        margin-top:8px;
+    }
+
+        #login-div a
+        {
+            color:#fff;
+            margin-left:8px;
+        }
+
+    #body-div
+    {
+        width: 100%;
+        float: left;
+    }
+
+    #map-div
+    {
+        height: 800px;
+        width: 100%;
+        margin: 0 auto;
+        border: 1px solid #808080;
+    }
+
+    #select-div
+    {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+        #select-div select
+        {
+            width: 100px;
+        }
+
+    .title-class
+    {
+        text-align: center;
+        color: #fff;
+        font-size: 16px;
+        margin-top: 10px;
+        margin-left:6px;
+        font-family: "微软雅黑";
+    }
+</style>
+
+@section scripts {
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=6c72e0845dfce8ec0a3d432c33b2f778"></script>
+    <script type="text/javascript">
+
+        var map = new BMap.Map("map-div");
+        var point = new BMap.Point(121.481888, 31.233229);
+        map.centerAndZoom(point, 12);
+        map.enableScrollWheelZoom();
+        map.addControl(new BMap.NavigationControl());
+        var customeLayer;
+
+        $(function () {
+            addCustomLayer();
+        });
+
+        function addCustomLayer() {
+            if (customeLayer) {
+                map.removeTileLayer(customeLayer);
+            }
+            customeLayer = new BMap.CustomLayer(15256);
+            map.addTileLayer(customeLayer);
+        }
+    </script>
+}
+<div id="top-bar">
+    <div id="logo-div">
+        <img src="@Url.Content("~/Images/jeep.png")" alt="Logo" />
+        <span class="title-class">购车用户数据平台</span>
+    </div>
+    <div id="login-div">
+        <a href="#">登录</a>
+        <a href="#">注册</a>
+    </div>
+</div>
+<div id="main-content">
+    <div id="select-div">
+        <span>购车时间选择：</span>
+        <select id="buyYear" name="buyYear">
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+        </select>
+    </div>
+    <div id="map-div"></div>
+</div>

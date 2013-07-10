@@ -29,6 +29,11 @@ namespace CarMatrix.Controllers
             return View();
         }
 
+        public ActionResult LbsMap()
+        {
+            return View();
+        }
+
         public JsonResult GetRecords(string buyTime, string brands, string model)
         {
             ResponseContent rc = new ResponseContent();

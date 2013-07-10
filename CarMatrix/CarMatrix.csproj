@@ -247,6 +247,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Images\jeep.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\loading.png" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -302,6 +303,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\LbsMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
